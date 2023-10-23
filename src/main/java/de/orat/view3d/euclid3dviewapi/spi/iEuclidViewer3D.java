@@ -14,24 +14,52 @@ public interface iEuclidViewer3D {
     public void open() throws Exception;
     public void close();
     
-    //public BoundingBox3D getBoundingBox();
+    /**
+     * Get an axis aligned bounding box.
+     * 
+     * @return 
+     */
     public iAABB getAABB();
     
     /**
+     * Add a sphere to the scene.
+     * 
      * Used to visualize spheres and round points.
      * 
      * @param location location of the point
      * @param label name of the point
      * @param color color
-     * @return id id to reference the object for later transformation
+     * @return handle to reference the object for later transformation
      */
-    public long addSphere(Point3d location, double radius, Color color, String label, boolean transparency);
-    //public long addOrientedPoint(Vector3d attitude, Point3d location, Color color, String label);
-    //public long addPointPair(Point3d p1, Point3d p2, String label, Color color1, Color color2, double lineRadius, double pointRadius);
-    public long addLine(Point3d p1, Point3d p2, Color color, double radius, String label);
-    public long addArrow(Point3d location, Vector3d direction, double radius, Color color, String label);
+    public long addSphere(Point3d location, double radius, Color color, 
+                          String label, boolean transparency);
     /**
-     * Used to visualize circles and oriented points.
+     * Add a line to the scene.
+     * 
+     * @param p1
+     * @param p2
+     * @param color
+     * @param radius
+     * @param label
+     * @return handle
+     */
+    public long addLine(Point3d p1, Point3d p2, Color color, double radius, String label);
+    
+    /**
+     * Add an arrow to the scene.
+     * 
+     * @param location
+     * @param direction, length of direction is shown in the visualization
+     * @param radius
+     * @param color
+     * @param label
+     * @return handle
+     */
+    public long addArrow(Point3d location, Vector3d direction, double radius, 
+                         Color color, String label);
+    
+    /**
+     * Add a circle to the scene.
      * 
      * @param location
      * @param normal
@@ -40,11 +68,12 @@ public interface iEuclidViewer3D {
      * @param label
      * @param isDashed if true and also isFull==true then the circle-line is shown dashed
      * @param isFilled if false only the circle-line is shown
-     * @return id
+     * @return handle
      */
     public long addCircle(Point3d location, Vector3d normal, double radius, 
-            Color color, String label, boolean isDahed, boolean isFilled);
+            Color color, String label, boolean isDashed, boolean isFilled);
     /**
+     * Add a polygone to the scene.
      * 
      * @param location
      * @param corners
@@ -52,13 +81,13 @@ public interface iEuclidViewer3D {
      * @param label
      * @param showNormal true, then show a normal vector
      * @param tranparency
-     * @return id
+     * @return handle
      */
     public long addPolygone(Point3d location, Point3d[] corners, Color color, 
             String label, boolean showNormal, boolean tranparency);
     
     /**
-     * Used to visualize flat points.
+     * Add a cube to the scene.
      * 
      * @param location
      * @param normal
@@ -66,26 +95,28 @@ public interface iEuclidViewer3D {
      * @param color
      * @param label
      * @param isDahed
-     * @return 
+     * @return handle
      */
     public long addCube(Point3d location, Vector3d dir, double width, 
-            Color color, String label, boolean isDashed);
+            Color color, String label, boolean tranparency);
+    
     /**
+     * Add a robot to the scene.
      * 
      * @param type robot type, default=ur5e=0
      * @param location
      * @param orientation
      * @param label
      * @param color
-     * @return 
+     * @return handle
      */
     public long addRobot(int type, Point3d location, Matrix3d orientation);
-    public void moveRobot(long id, double[] angels);
+    public void moveRobot(long handle, double[] angels);
     
-    public boolean removeNode(long id);
+    public boolean removeNode(long handle);
     
     // default impl. könnte das ursprüngliche Objekt löschen und ein neues Objekt
     // in der transformierten Pose erzeugen
     // Copellia kann aber transform
-    public void transform(long id, Matrix4d transform);
+    public void transform(long handle, Matrix4d transform);
 }
