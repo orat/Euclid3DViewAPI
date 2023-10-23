@@ -1,6 +1,7 @@
 package de.orat.view3d.euclid3dviewapi.spi;
 
 import de.orat.view3d.euclid3dviewapi.api.BoundingBox3D;
+import de.orat.view3d.euclid3dviewapi.util.AxisAlignedBoundingBox;
 import java.awt.Color;
 import org.jogamp.vecmath.Matrix3d;
 import org.jogamp.vecmath.Matrix4d;
@@ -15,7 +16,8 @@ public interface iEuclidViewer3D {
     public void open() throws Exception;
     public void close();
     
-    public BoundingBox3D getBoundingBox();
+    //public BoundingBox3D getBoundingBox();
+    public iAABB getAABB();
     
     /**
      * Used to visualize spheres and round points.
@@ -25,7 +27,7 @@ public interface iEuclidViewer3D {
      * @param color color
      * @return id id to reference the object for later transformation
      */
-    public long addSphere(Point3d location, double radius, Color color, String label);
+    public long addSphere(Point3d location, double radius, Color color, String label, boolean transparent);
     //public long addOrientedPoint(Vector3d attitude, Point3d location, Color color, String label);
     //public long addPointPair(Point3d p1, Point3d p2, String label, Color color1, Color color2, double lineRadius, double pointRadius);
     public long addLine(Point3d p1, Point3d p2, Color color, double radius, String label);
@@ -38,13 +40,15 @@ public interface iEuclidViewer3D {
      * @param radius
      * @param color
      * @param label
-     * @param isDahed if true and also isFull==true then the circle-line is shown dashed
-     * @param isFull if false only the circle-line is shown
-     * @return 
+     * @param isDashed if true and also isFull==true then the circle-line is shown dashed
+     * @param isFilled if false only the circle-line is shown
+     * @return id
      */
-    public long addCircle(Point3d location, Vector3d normal, double radius, Color color, String label, boolean isDahed, boolean isFull);
+    public long addCircle(Point3d location, Vector3d normal, double radius, 
+            Color color, String label, boolean isDahed, boolean isFilled);
     //public long addPlane(Point3d location, Vector3d normal, Color color, String label, boolean showNormal);
-    public long addPolygone(Point3d location, Point3d[] corners, Color color, String label, boolean showNormal);
+    public long addPolygone(Point3d location, Point3d[] corners, Color color, 
+            String label, boolean showNormal, boolean tranparency);
     
     /**
      * Used to visualize flat points.
@@ -57,8 +61,8 @@ public interface iEuclidViewer3D {
      * @param isDahed
      * @return 
      */
-    public long addCube(Point3d location, double height, double width, double depth, 
-            Color color, String label, boolean isDahed);
+    public long addCube(Point3d location, Vector3d dir, double width, 
+            Color color, String label, boolean isDashed);
     /**
      * 
      * @param type robot type, default=ur5e=0
@@ -75,6 +79,6 @@ public interface iEuclidViewer3D {
     
     // default impl. könnte das ursprüngliche Objekt löschen und ein neues Objekt
     // in der transformierten Pose erzeugen
-    // Copellia kann das aber selbst
+    // Copellia kann aber transform
     public void transform(long id, Matrix4d transform);
 }

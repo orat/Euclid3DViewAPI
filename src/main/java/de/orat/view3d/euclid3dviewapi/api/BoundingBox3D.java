@@ -4,9 +4,10 @@ import org.jogamp.vecmath.Point3d;
 import org.jogamp.vecmath.Point3f;
 
 /**
- *
+ * brauche ich das überhaupt noch
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
+@Deprecated
 public class BoundingBox3D {
     
     private Point3d lowerCorner;

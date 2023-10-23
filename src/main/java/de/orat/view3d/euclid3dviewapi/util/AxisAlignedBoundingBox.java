@@ -1,5 +1,6 @@
 package de.orat.view3d.euclid3dviewapi.util;
 
+import de.orat.view3d.euclid3dviewapi.spi.iAABB;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +13,7 @@ import org.jogamp.vecmath.Vector3d;
  * 
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
-public class AxisAlignedBoundingBox {
+public class AxisAlignedBoundingBox implements iAABB {
     
     // first variant to represent the AABB (based on center and size-vector)
     private Point3d center;
