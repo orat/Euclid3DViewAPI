@@ -1,7 +1,5 @@
 package de.orat.view3d.euclid3dviewapi.spi;
 
-import de.orat.view3d.euclid3dviewapi.api.BoundingBox3D;
-import de.orat.view3d.euclid3dviewapi.util.AxisAlignedBoundingBox;
 import java.awt.Color;
 import org.jogamp.vecmath.Matrix3d;
 import org.jogamp.vecmath.Matrix4d;
@@ -27,7 +25,7 @@ public interface iEuclidViewer3D {
      * @param color color
      * @return id id to reference the object for later transformation
      */
-    public long addSphere(Point3d location, double radius, Color color, String label, boolean transparent);
+    public long addSphere(Point3d location, double radius, Color color, String label, boolean transparency);
     //public long addOrientedPoint(Vector3d attitude, Point3d location, Color color, String label);
     //public long addPointPair(Point3d p1, Point3d p2, String label, Color color1, Color color2, double lineRadius, double pointRadius);
     public long addLine(Point3d p1, Point3d p2, Color color, double radius, String label);
@@ -46,7 +44,16 @@ public interface iEuclidViewer3D {
      */
     public long addCircle(Point3d location, Vector3d normal, double radius, 
             Color color, String label, boolean isDahed, boolean isFilled);
-    //public long addPlane(Point3d location, Vector3d normal, Color color, String label, boolean showNormal);
+    /**
+     * 
+     * @param location
+     * @param corners
+     * @param color
+     * @param label
+     * @param showNormal true, then show a normal vector
+     * @param tranparency
+     * @return id
+     */
     public long addPolygone(Point3d location, Point3d[] corners, Color color, 
             String label, boolean showNormal, boolean tranparency);
     
