@@ -57,17 +57,17 @@ public class Circle extends Plane {
 
             // Eine beliebige Gerade beschaffen, die sicher den Kreis schneidet
 
-            Line3d line = null;
+            Line line = null;
 
             // Einen Richtungsvektor der gewuenschten Geraden zuverlaessig bestimmen
             if (n.y != 0.0d && n.z != 0.0d){
-                 line = new Line3d(M, new Vector3d(0.0d,1.0d,-n.y/n.z));
+                 line = new Line(M, new Vector3d(0.0d,1.0d,-n.y/n.z));
             } else if (n.x != 0.0d && n.z != 0.0d){
-                 line = new Line3d(M, new Vector3d(1.0d,0.0d,-n.x/n.z));
+                 line = new Line(M, new Vector3d(1.0d,0.0d,-n.x/n.z));
             } else if (n.z == 0.0d && n.x != 0.0d){
-                 line = new Line3d(M, new Vector3d(-n.y/n.x,1.0d,1.0d));
+                 line = new Line(M, new Vector3d(-n.y/n.x,1.0d,1.0d));
             } else if (n.z == 0.0d && n.y != 0.0d){
-                 line = new Line3d(M, new Vector3d(1.0d,-n.x/n.y,1.0d));
+                 line = new Line(M, new Vector3d(1.0d,-n.x/n.y,1.0d));
             } else {
                 System.out.println("Das Beschaffen eines Richtungsvektors einer Geraden ist fehlgeschlagen!"); 
             }
@@ -108,13 +108,13 @@ public class Circle extends Plane {
     // Es wird davon ausgegangen, dass die Gerade in der Ebene des Kreises liegt
     // falls es keinen Schnittpunkt gibt, wird der Aufpunkt des Kreismittelpunkts
     // auf die Gerade zurückgegeben
-    public Vector3d[] cut2(Line3d line) throws CutFailedException{
+    public Vector3d[] cut2(Line line) throws CutFailedException{
         return cut2(this,line);
     }
     // Die methode ist kritisch, da aufgrund der Numerik es leicht passieren kann
     // dass es keine Schnittpunkt gibt
     @Override
-    public Vector3d[] cut(Line3d line) throws CutFailedException {
+    public Vector3d[] cut(Line line) throws CutFailedException {
         return cut(this,line);
     }
     /**
@@ -125,7 +125,7 @@ public class Circle extends Plane {
      * Leider ist es kompliziert wenn es keinen Schnittpunkt gibt einen Aufpunkt zu bestimmen, da
      * die Gerade in der Regeln nicht in der Ebene liegt in der der Kreis liegt!
      */
-    public static Vector3d[] cut(Circle circle, Line3d line) throws CutFailedException {
+    public static Vector3d[] cut(Circle circle, Line line) throws CutFailedException {
         
          double r = circle.getRadius();
          Vector3d M = circle.getOrigin();
@@ -197,7 +197,7 @@ public class Circle extends Plane {
      * Wenn es keine Lösung gibt, wird der Aufpunkt des Kreismittelpunkts auf die
      * Gerade bestimmt und dann auf den Kreis projeziert und zurückgegeben.
      */
-    public static Vector3d[] cut2(Circle circle, Line3d line) throws CutFailedException {
+    public static Vector3d[] cut2(Circle circle, Line line) throws CutFailedException {
         
        Vector3d[] result;
        
@@ -260,7 +260,7 @@ public class Circle extends Plane {
      *
      */
     @Override
-    public Line3d cut(Plane plane) throws CutFailedException {
+    public Line cut(Plane plane) throws CutFailedException {
         return super.cut(plane);
     }
     // das ist doch mist, bessere Namensgebung gefordert!!!
@@ -283,8 +283,8 @@ public class Circle extends Plane {
          
         // zuerst die Ebene in der der Kreis liegt mit der zweiten Ebenen schneiden
         // das gibt in der Regel eine Gerade
-        Line3d line = plane.cut((Plane) circle);
-        //line = new Line3d(circle.getOrigin(),line.getDirectionVector());
+        Line line = plane.cut((Plane) circle);
+        //line = new Line(circle.getOrigin(),line.getDirectionVector());
         
         // jetzt die Gerade mit dem Kreis schneiden
         // ob das wohl immer gut geht? Ungenauigkeiten in der Numerik könnten
@@ -339,7 +339,7 @@ public class Circle extends Plane {
         k.negate();
         k.add(startPoint);
         try {
-            Vector3d[] result = cut(new Circle(midPoint,normalVector,100.0d), new Line3d(startPoint, k));
+            Vector3d[] result = cut(new Circle(midPoint,normalVector,100.0d), new Line(startPoint, k));
             System.out.println("P1="+result[0]);
             if (result.length == 2){
                 System.out.println("P2="+result[1]);

@@ -10,15 +10,15 @@ import org.jogamp.vecmath.*;
 /**
  * @author Oliver Rettig
  */
-public class Line3d {
+public class Line {
     
     protected Vector3d o = null;
     protected Vector3d n = null;
     
     // wird von Arrow benoetigt
-    protected Line3d(){}
+    protected Line(){}
     
-    public Line3d(Vector3d o, Vector3d n) {
+    public Line(Vector3d o, Vector3d n) {
         this.o = o;
         this.n = new Vector3d(n);
         n.normalize();
@@ -86,7 +86,7 @@ public class Line3d {
     
     // Wenn der Punkt auf der Gerade liegt, dann wird der Punkt selbst zurueckgeliefert?
     // liefert die Aufpunkt des angegebenen Punkts P auf die Gerade
-    public static final Vector3d project(Line3d line, Vector3d P) {
+    public static final Vector3d project(Line line, Vector3d P) {
         return project(line.getOrigin(),line.getDirectionVector(),P);
     }
     
@@ -98,10 +98,10 @@ public class Line3d {
      * grösser ist als der angegebene threshold.
      *
      */
-    public Vector3d cut(Line3d line, double threshold) throws CutFailedException {
+    public Vector3d cut(Line line, double threshold) throws CutFailedException {
             throw new RuntimeException("not implemented!");
     }
-    /*public Line3d cut(Plane plane) throws CutFailedException{
+    /*public Line cut(Plane plane) throws CutFailedException{
         return plane.cut(this); 
     }*/
     public Vector3d[] cut(Sphere sphere) throws CutFailedException{
@@ -117,7 +117,7 @@ public class Line3d {
         return result;
     }
     public static void main(String[] args){
-        Line3d line = new Line3d(new Vector3d(0,-1349,-0.7),new Vector3d(-0.1,0.95,0.2));
+        Line line = new Line(new Vector3d(0,-1349,-0.7),new Vector3d(-0.1,0.95,0.2));
         Vector3d p = line.project(new Vector3d(209,295,934));
         System.out.println("P="+p);
     }

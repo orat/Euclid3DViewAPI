@@ -347,7 +347,7 @@ public class AxisAlignedBoundingBox implements iAABB {
     }
     
     // https://www.geometrictools.com/GTE/Mathematics/IntrLine3AlignedBox3.h
-    /*public boolean clip(Line3d line, Point3d[] out){
+    /*public boolean clip(Line line, Point3d[] out){
         //TODO
         throw new RuntimeException("not yet implmeneted!");
     }*/
@@ -364,7 +364,7 @@ public class AxisAlignedBoundingBox implements iAABB {
      * @param line to clip on the AA-bounding-box
      * @return output near point, far point or empty array if no intersection
      */
-    public Point3d[] clip(Line3d line){
+    public Point3d[] clip(Line line){
          
         Vector3d halfSize = new Vector3d(this.size);
         halfSize.scale(0.5d);
@@ -434,14 +434,14 @@ public class AxisAlignedBoundingBox implements iAABB {
      * @param line ray with origin as starting point
      * @return 0, 1, or 2 clipping points
      */
-    public Point3d[] clip3(Line3d line){
+    public Point3d[] clip3(Line line){
         Point3d hitPoint1 = new Point3d();
         boolean result = clipRay(line, hitPoint1);
         if (result){
             Point3d hitPoint2 = new Point3d();
             Vector3d direction2 = line.getDirectionVector();
             direction2.negate();
-            Line3d line2 = new Line3d(line.getOrigin(),direction2);
+            Line line2 = new Line(line.getOrigin(),direction2);
             result = clipRay(line2, hitPoint2);
             if (result){
                 return new Point3d[]{hitPoint1, hitPoint2};
@@ -463,12 +463,12 @@ public class AxisAlignedBoundingBox implements iAABB {
      * @param line ray with origin as starting point
      * @return 0, 1, or 2 clipping points
      */
-    public Point3d[] clip4(Line3d line){
+    public Point3d[] clip4(Line line){
         Point3d hitPoint1 = clipRay2(line);
         if (hitPoint1 != null){
             Vector3d direction2 = line.getDirectionVector();
             direction2.negate();
-            Line3d line2 = new Line3d(line.getOrigin(),direction2);
+            Line line2 = new Line(line.getOrigin(),direction2);
             Point3d hitPoint2 = clipRay2(line2);
             if (hitPoint2 != null){
                 return new Point3d[]{hitPoint1, hitPoint2};
@@ -493,7 +493,7 @@ public class AxisAlignedBoundingBox implements iAABB {
     * @param hitPoint
     * @return true if the rays hits the boundingBox
     */
-    public boolean clipRay(Line3d line, Point3d hitPoint){
+    public boolean clipRay(Line line, Point3d hitPoint){
 
         final int RIGHT	= 0;
         final int LEFT	= 1;
@@ -606,7 +606,7 @@ public class AxisAlignedBoundingBox implements iAABB {
      * @return intersection point on the bounding box (only the first is
      *         returned) or null if no intersection
      */
-    public Point3d clipRay2(Line3d ray/*, float minDist, float maxDist*/) {
+    public Point3d clipRay2(Line ray/*, float minDist, float maxDist*/) {
         Vector3d invDir = new Vector3d(1f / ray.n.x, 1f / ray.n.y, 1f / ray.n.z);
 
         boolean signDirX = invDir.x < 0;

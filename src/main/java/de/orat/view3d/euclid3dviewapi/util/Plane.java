@@ -98,16 +98,16 @@ public class Plane  {
     }
     
     
-    public Line3d cut(Plane plane) throws CutFailedException {
+    public Line cut(Plane plane) throws CutFailedException {
         return cut(this, plane);
     }
     public Vector3d[] cut(Circle circle) throws CutFailedException {
         return Circle.cut(this,circle);
     }
-    public Vector3d[] cut(Line3d line) throws CutFailedException {
+    public Vector3d[] cut(Line line) throws CutFailedException {
         return cut(this,line);
     }
-    public static Vector3d[] cut(Plane plane, Line3d line) throws CutFailedException {
+    public static Vector3d[] cut(Plane plane, Line line) throws CutFailedException {
        // besser wäre es statt auf 0 auf einen sehr kleinen Wert zu testen damit
        // der cut bereits ungültig wird, wenn die line nahezu parallel zur Ebene ist
        //TODO
@@ -138,9 +138,9 @@ public class Plane  {
      *
      * ausserdem klappt es nicht, wenn die Schnittgerade x=y=0 ergeben soll!
      */
-    public static Line3d cut(Plane plane1, Plane plane2) throws CutFailedException{
+    public static Line cut(Plane plane1, Plane plane2) throws CutFailedException{
        
-        Line3d line = null;
+        Line line = null;
        
         // Ebene 1
         Vector3d n1 = plane1.getNormalVector(); // da bekomme ich bereits einen normalisierten Vektor
@@ -210,7 +210,7 @@ public class Plane  {
                     //double oy = (c-a)/b;
                     //o = new Vector3d(1d,oy,(d1-a1)/(b1*(c-a)/b));
                 }
-                line = new Line3d(o,f);
+                line = new Line(o,f);
             } else {
                 //FIXME
                 System.out.println("Die zweite Ebene liegt wagrecht im Raum. "+

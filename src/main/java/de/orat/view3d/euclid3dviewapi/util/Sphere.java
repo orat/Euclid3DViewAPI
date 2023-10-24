@@ -120,11 +120,11 @@ public class Sphere {
       return new Circle(M,k,r);
     }
     
-    public final Vector3d[] cut(Line3d line) throws CutFailedException {
+    public final Vector3d[] cut(Line line) throws CutFailedException {
         return cut(this,line);
     }
      
-    public static Vector3d[] cut(Sphere sphere, Line3d line) throws CutFailedException {
+    public static Vector3d[] cut(Sphere sphere, Line line) throws CutFailedException {
         Vector3d[] result;
         Vector3d s = line.getDirectionVector();
         double e = s.lengthSquared();
@@ -162,7 +162,7 @@ public class Sphere {
      
     public static void main1(String[] args){
         Sphere sphere = new Sphere(new Vector3d(),1d);
-        Line3d line = new Line3d(new Vector3d(0.5d,0d,0d),new Vector3d(0d,0d,1d));
+        Line line = new Line(new Vector3d(0.5d,0d,0d),new Vector3d(0d,0d,1d));
         try {
         Vector3d[] result = sphere.cut(line);
         if (result.length == 2){
@@ -187,7 +187,7 @@ public class Sphere {
     
      public static void main(String[] args){
         Sphere sphere1 = new Sphere(new Vector3d(0.5,0.5,0),1d);
-        Line3d line = new Line3d(new Vector3d(),new Vector3d(0.5,0,0.5));
+        Line line = new Line(new Vector3d(),new Vector3d(0.5,0,0.5));
         
         try {
             Vector3d[] result = sphere1.cut(line);
