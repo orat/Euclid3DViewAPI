@@ -1,5 +1,6 @@
 package de.orat.view3d.euclid3dviewapi.spi;
 
+import de.orat.view3d.euclid3dviewapi.util.Plane;
 import java.awt.Color;
 import org.jogamp.vecmath.Matrix3d;
 import org.jogamp.vecmath.Matrix4d;
@@ -17,7 +18,7 @@ public interface iEuclidViewer3D {
     /**
      * Get an axis aligned bounding box.
      * 
-     * @return 
+     * @return current axis aligned bounding box
      */
     public iAABB getAABB();
     
@@ -85,6 +86,50 @@ public interface iEuclidViewer3D {
      */
     public long addPolygone(Point3d location, Point3d[] corners, Color color, 
             String label, boolean showNormal, boolean tranparency);
+    
+    /**
+     * Add a plane to the 3d view with clipping.
+     * 
+     * @param location first point of the plane, unit is [mm]
+     * @param n normal vector
+     * @param color color of the plane
+     * @param label the text of the label of the plane
+     * @param showNormal not yet implemented
+     * @return false if outside the bounding-box
+     */
+    /*default long addPolygone(Point3d location, Vector3d n, java.awt.Color color, 
+            String label, boolean showNormal){
+        
+        if (!isValid(location) || !isValid(n)){
+            throw new IllegalArgumentException("addPlane(): location or attitude with illegal values!");
+        }
+        
+        // Clipping
+        
+        Plane plane = new Plane(new Vector3d(location), n);
+
+        // clipping
+        iAABB aabb = createAxisAlignedBoundBox();
+        
+        // testweise die Ecken der bounding box visualisieren
+        //List<Point3d> points = aabb.getCorners();
+        //for (int i=0;i<points.size();i++){
+        //    this.addPoint(points.get(i), Color.BLUE, 30, String.valueOf(i));
+        //}
+        
+        Point3d[] corners = aabb.clip(plane); // corners of a polygon in a plane
+        
+        boolean result = false;
+        if (corners.length > 2){
+            org.jzy3d.colors.Color col = new org.jzy3d.colors.Color(color.getRed(),color.getGreen(),color.getBlue(), color.getAlpha());
+            return addPlane(location, corners, col, label);
+        } else {
+            System.out.println("addPlane \""+label+"\" failed. Corners cauld not be determined!");
+            return -1;
+        }
+    }*/
+    
+   
     
     /**
      * Add a cube to the scene.
