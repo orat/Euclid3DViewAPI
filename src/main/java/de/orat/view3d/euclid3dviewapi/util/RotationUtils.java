@@ -10,6 +10,9 @@ public class RotationUtils  {
     /**
      * Axis angle to euler/cardan determination.
      * 
+     * following
+     * https://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToEuler/index.htm
+     * 
      * @param rot normalized rotation axis
      * @param angle in radians
      * @return heading, attitude, bank in radiians [0;pi]
@@ -24,12 +27,7 @@ public class RotationUtils  {
         double s=Math.sin(angle);
         double c=Math.cos(angle);
         double t=1-c;
-        //  if axis is not already normalised then uncomment this
-        // double magnitude = Math.sqrt(x*x + y*y + z*z);
-        // if (magnitude==0) throw error;
-        // x /= magnitude;
-        // y /= magnitude;
-        // z /= magnitude;
+        
         if ((rot.x*rot.y*t + rot.z*s) > 0.998) { // north pole singularity detected
             heading = 2*Math.atan2(rot.x*Math.sin(angle/2),Math.cos(angle/2));
             attitude = Math.PI/2;
@@ -57,15 +55,15 @@ public class RotationUtils  {
      */
     public static double[] getEulerAnglesToRotateFromZ(Vector3d targetDir){
         
-        // Vektor in Richtung der y-Achse
+        // Vector in direction of the z-Achse
         Vector3d z = new Vector3d(0,0d,1);
        
-        // Rotationsachse steht senkrecht auf alter und neuer Richtung 
+        // Rotation axis upright to z and target direction
         Vector3d rot = new Vector3d();
         rot.cross(z, targetDir);
         
-        // Drehwinkel bestimmen zwischen der Richtung der z-Achse
-        // und der Ziel-Richtung
+        // Rotation angle betwee z-axis and
+        // target direction
         double alpha = z.angle(targetDir);
         
         return toEuler(rot, alpha);
