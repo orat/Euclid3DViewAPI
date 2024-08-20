@@ -1,6 +1,5 @@
 package de.orat.view3d.euclid3dviewapi.spi;
 
-import de.orat.view3d.euclid3dviewapi.util.Plane;
 import java.awt.Color;
 import org.jogamp.vecmath.Matrix3d;
 import org.jogamp.vecmath.Matrix4d;
@@ -157,6 +156,9 @@ public interface iEuclidViewer3D {
      */
     public long addRobot(int type, Point3d location, Matrix3d orientation);
     public void moveRobot(long handle, double[] angels);
+    
+    
+    public long addMesh(String path, Matrix4d transform);
     
     public boolean removeNode(long handle);
     

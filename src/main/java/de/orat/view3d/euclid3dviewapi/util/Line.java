@@ -42,7 +42,7 @@ public class Line {
         return project(this,P);
     }
     
-    // P1 = Ursrpung der Gerade, n gleich Richtungsvektor der Geraden
+    // P1 = Ursprung der Gerade, n gleich Richtungsvektor der Geraden
     // Wenn der Punkt auf der Gerade liegt, dann wird der Punkt selbst zurueckgeliefert?
     // liefert die Aufpunkt des angegebenen Punkts P auf die Gerade
     // Achtung: Der Richtungsvektor muss normalisiert sein
