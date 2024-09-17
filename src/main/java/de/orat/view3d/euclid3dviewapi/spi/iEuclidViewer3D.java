@@ -153,9 +153,14 @@ public interface iEuclidViewer3D {
      * @param label
      * @param color
      * @return handle
+     * 
+     * TODO
+     * unklar, ob das überhaupt noch gebraucht wird, denn einen Robot oder Sceleton
+     * kann ja mit jurdf erzeugt werden und das braucht dann nur die addMesh() Methode
+     * hier.
      */
-    public long addRobot(int type, Point3d location, Matrix3d orientation);
-    public void moveRobot(long handle, double[] angels);
+    /*public long addRobot(int type, Point3d location, Matrix3d orientation);
+    public void moveRobot(long handle, double[] angels);*/
     
     
     public long addMesh(String path, Matrix4d transform);
