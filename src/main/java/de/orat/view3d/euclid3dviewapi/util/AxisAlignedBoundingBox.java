@@ -138,7 +138,9 @@ public class AxisAlignedBoundingBox implements iAABB {
 
         double d = plane_normal.dot(new Vector3d(plane_point));
         
-        if (plane_normal.dot(ray) == 0){
+        //if (plane_normal.dot(ray) == 0){
+        //TODO Konstante 0.001 besser bestimmen!!!
+        if (Math.abs(plane_normal.dot(ray)) < 0.001){
             return null; 
         }
 
@@ -161,6 +163,25 @@ public class AxisAlignedBoundingBox implements iAABB {
      * 
      * @param plane
      * @return sortest array of polygon corners
+     * 
+     * Bug: mit
+     * plane z6 a=(1.0, 0.0, 2.220446049250313E-16), o=(0.0, 0.0, 0.0)
+     * AABB at c=(1000.0, 1000.0, 0.0) with size=(40.0, 40.0, 40.0)
+     * 
+     * führt das zu falschen Ecken.
+     *   corner[0]: x=1020.0, y=980.0, z=-4.593671619917906E18
+     *   corner[1]: x=0.0, y=980.0, z=20.0
+     *   corner[2]: x=0.0, y=1020.0, z=20.0
+     *   corner[3]: x=0.0, y=1020.0, z=-20.0
+     *   corner[4]: x=0.0, y=980.0, z=-20.0
+     *   corner[5]: x=980.0, y=1020.0, z=-4.413527634823086E18
+     *   corner[6]: x=1020.0, y=1020.0, z=-4.593671619917906E18
+     *   corner[7]: x=980.0, y=980.0, z=-4.413527634823086E18
+     * 
+     * WORKAROUND 
+     * - Wenn Ebene fast senkrecht auf einem LineSegmet steht keinen Punkt bestimmen!!!
+     * - In diesem Fall stimmt allerdings die Sortierung der bestimmten Punkte nicht mehr
+     * 
      */
     public Point3d[] clip(Plane plane){
         
@@ -169,9 +190,11 @@ public class AxisAlignedBoundingBox implements iAABB {
         Point3d hitPoint = cutLineSegmentPlane(xyzmin, xyminzmax, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xyzmin, xminymaxzmin, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xyzmin, xmaxyzmin, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
@@ -179,29 +202,35 @@ public class AxisAlignedBoundingBox implements iAABB {
         hitPoint = cutLineSegmentPlane(xyzmax, xminyzmax, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xyzmax, xmaxyminzmax, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xyzmax, xymaxzmin, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
         
-        
         hitPoint = cutLineSegmentPlane(xmaxyzmin, xmaxyminzmax, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xminymaxzmin, xminyzmax, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xmaxyzmin, xymaxzmin, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xyminzmax, xminyzmax, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xmaxyminzmax, xyminzmax, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);
+        
         hitPoint = cutLineSegmentPlane(xymaxzmin, xminymaxzmin, 
                                 plane.getNormalVector(),  new Point3d(plane.getOrigin()));
         if (hitPoint != null) corners.add(hitPoint);

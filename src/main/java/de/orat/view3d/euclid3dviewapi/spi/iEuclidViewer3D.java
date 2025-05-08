@@ -1,7 +1,6 @@
 package de.orat.view3d.euclid3dviewapi.spi;
 
 import java.awt.Color;
-import org.jogamp.vecmath.Matrix3d;
 import org.jogamp.vecmath.Matrix4d;
 import org.jogamp.vecmath.Point3d;
 import org.jogamp.vecmath.Vector3d;
@@ -12,7 +11,11 @@ import org.jogamp.vecmath.Vector3d;
 public interface iEuclidViewer3D {
     
     public void open() throws Exception;
-    public void close();
+    /**
+     * 
+     * @return  closes the corresponding UI component, true if this was successful, fals if closing was refused for some reason.
+     */
+    public boolean close(); // close scheint gar nicht verwendet zu werden
     
     /**
      * Get an axis aligned bounding box.
